@@ -1,0 +1,2 @@
+# margitex
+Store management program 
