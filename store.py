@@ -22,6 +22,7 @@ class Client():
             print("order already added")
         else:
             self.orders[order_id] = status
+            print("order has been added")
 
 
 
@@ -30,6 +31,7 @@ class Client():
 
 
 
-    #
+
+
 
 
