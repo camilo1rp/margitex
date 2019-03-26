@@ -1,0 +1,11 @@
+<application>
+  <component name="ProjectManager">
+    <defaultProject>
+      <component name="Encoding" addBOMForNewFiles="with NO BOM" />
+      <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.7 (Python37)" project-jdk-type="Python SDK" />
+      <component name="PropertiesComponent">
+        <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+      </component>
+    </defaultProject>
+  </component>
+</application>
