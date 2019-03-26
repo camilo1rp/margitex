@@ -17,6 +17,13 @@ class Client():
     def set_phone(self, new_phone):
         self.phone = new_phone
 
+    def add_order(self, order_id, status):
+        if order_id in self.orders.keys():
+            print("order already added")
+        else:
+            self.orders[order_id] = status
+
+
 
 
 
