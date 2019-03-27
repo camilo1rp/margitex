@@ -72,7 +72,7 @@ class Order():
         self.pending = {}
 
     def add_item(self, item, pending=1): # pending 1 = pending 0 = dispatched
-        if item in items.keys():
+        if item in self.items.keys():
             self.items[item][0] += 1 # [item][0] = quantity
             self.items[item][1] += pending # [item][1] = pending
         else:
@@ -83,7 +83,7 @@ class Order():
             self.pending[item] = info[1]
 
     def dispatch_item(self, item, quantity=1):
-        if item in items.keys():
+        if item in self.items.keys():
             if (self.items[item][1] - quantity) >= 0:
                 self.items[item][1] -= quantity
                 return True
@@ -100,7 +100,7 @@ class Order():
     def get_total_price(self):
         total_price = 0
         for item, info in self.items.items():
-            total price += item.price * info[0]
+            total_price += item.price * info[0]
         return total_price
 
 
