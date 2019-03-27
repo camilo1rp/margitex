@@ -80,10 +80,11 @@ class Order():
             self.items[item][0] = 1
             self.items[item][1] = pending
 
+        print("{} added to order".format(item.code))
+
         for item, info in self.items.items():
             self.pending[item.code] = info[1]
             self.dispatched[item.code] = [info[0]-info[1]]
-
 
     def dispatch_item(self, item, quantity=1):
         if item in self.items.keys():
@@ -94,7 +95,7 @@ class Order():
                 print("all items already dispatched")
                 return False
         else:
-            print("Not item with code: {} in order".format(item))
+            print("Not item with code: {} in order".format(item.code))
             return False
 
     def get_pending(self):
@@ -102,7 +103,6 @@ class Order():
 
     def get_dispatched_items(self):
         return self.dispatched
-
 
     def get_total_price(self):
         total_price = 0
