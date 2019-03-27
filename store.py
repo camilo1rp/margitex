@@ -70,6 +70,7 @@ class Order():
         self.date = date
         self.items = {} # items = {item.code = [quantity, pending], {..}, ]
         self.pending = {}
+        self.dispatched = {}
 
     def add_item(self, item, pending=1): # pending 1 = pending 0 = dispatched
         if item in self.items.keys():
@@ -80,7 +81,9 @@ class Order():
             self.items[item][1] = pending
 
         for item, info in self.items.items():
-            self.pending[item] = info[1]
+            self.pending[item.code] = info[1]
+            self.dispatched[item.code] = [info[0]-info[1]]
+
 
     def dispatch_item(self, item, quantity=1):
         if item in self.items.keys():
@@ -96,6 +99,10 @@ class Order():
 
     def get_pending(self):
         return self.pending
+
+    def get_dispatched_items(self):
+        return self.dispatched
+
 
     def get_total_price(self):
         total_price = 0
