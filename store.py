@@ -11,6 +11,18 @@ class Client():
         self.email = email
         self.orders = {}
 
+    def get_phone(self):
+        return self.phone
+
+    def get_email(self):
+        return self.email
+
+    def get_name(self):
+        return self.name
+
+    def get_orders(self):
+        return self.orders
+
     def set_email(self, new_email):
         self.email = new_email
 
@@ -24,6 +36,25 @@ class Client():
             self.orders[order_id] = status
             print("order has been added")
 
+#Class Items
+class Items():
+    #constructor
+    def __init__(self, item_type, institution, size, price):
+        self.type = item_type
+        self.institution = institution
+        self.size = size
+        self.price = price
+
+    def get_price(self):
+        return price
+
+    def get_size(self):
+        return size
+
+    def get_type(self):
+        return item_type
+
+    def set_price(self, ):
 
 
 
