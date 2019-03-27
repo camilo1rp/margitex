@@ -40,21 +40,23 @@ class Client():
 class Items():
     #constructor
     def __init__(self, item_type, institution, size, price):
-        self.type = item_type
+        self.item_type = item_type
         self.institution = institution
         self.size = size
         self.price = price
 
     def get_price(self):
-        return price
+        return self.price
 
     def get_size(self):
-        return size
+        return self.size
 
     def get_type(self):
-        return item_type
+        return self.item_type
 
-    def set_price(self, ):
+    def set_price(self, new_price):
+        self.price = new_price
+
 
 
 
