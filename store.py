@@ -110,6 +110,19 @@ class Order():
             total_price += item.price * info[0]
         return total_price
 
+#Class Store
+class Store():
+    def __init__(self):
+        self.users = {}
+        self.orders = {}
+        self.inventory = {}
+
+    def add_new_item(self, new_item):
+        pass
+
+
+
+
 
 
 
