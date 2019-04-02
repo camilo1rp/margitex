@@ -48,6 +48,9 @@ class Item():
         self.price = price
         self.code = item_type[::3] + institution[::3] + str(size)
 
+    def __repr__(self):
+        return str(self.code)
+
     def get_code(self):
         return self.code
 
@@ -113,12 +116,41 @@ class Order():
 #Class Store
 class Store():
     def __init__(self):
-        self.users = {}
+        self.client = {}
         self.orders = {}
         self.inventory = {}
 
-    def add_new_item(self, new_item):
-        pass
+    def add_item_to_inventory(self, new_item, qty=1):
+        if new_item in self.inventory.keys():
+            self.inventory[new_item] += qty
+        else:
+            self.inventory[new_item] = qty
+        print("item has beed added")
+
+    def create_order(self, order_id, date):
+        if order_id in self.orders.values():
+            print("order already exist")
+            return False
+        else:
+            return Order(order_id, date)
+
+
+    def add_order_to_client(self, client, order):
+        if client in
+
+
+    def add_item_to_order(self, item, qty, order):
+        if order in self.orders.keys():
+            if item in self.orders[order].items.keys():
+                self.orders[order].items[item] += qty
+            else:
+                self.orders[order].items[item] = qty
+        else:
+            print("order does not exist. create order before adding new items")
+
+
+
+
 
 
 
