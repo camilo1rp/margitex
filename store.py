@@ -51,6 +51,11 @@ class Item():
     def __repr__(self):
         return str(self.code)
 
+    def __eq__(self, other):
+        if self.code == other.code:
+            return True
+        return False
+
     def get_code(self):
         return self.code
 
@@ -82,8 +87,7 @@ class Order():
     def __eq__(self, other):
         if self.order_id == other:
             return True
-        else:
-            return False
+        return False
 
     def add_item(self, item, pending=1): # pending 1 = pending 0 = dispatched
         if item in self.items.keys():
@@ -130,6 +134,13 @@ class Store():
         self.orders = {} # orders = {order_id : Order object, ...}
         self.inventory = {} # inventory = {Items object: quantity}
 
+    def create_item(self, item_type, institution, size, price):
+        temp_item = Item(item_type, institution, size, price)
+        if temp_item in self.inventory.keys():
+            print("Item alredy exists")
+        else:
+            return temp_item
+
     def add_item_to_inventory(self, new_item, qty=1):
         if new_item in self.inventory.keys():
             self.inventory[new_item] += qty
@@ -154,6 +165,18 @@ class Store():
         else:
             return Order(order_id, date, due_date)
 
+    def add_item_to_order(self, item, order_id, qty=1, pending=1):
+        if order_id in self.orders.keys():
+            if item in self.inventory.keys() and pending == 0:
+                if not self.remove_item_from_inventory(item, qty):
+                    return False
+            for i in range(qty):
+                self.orders[order_id].add_item(item, pending)
+                return True
+        else:
+            print("order does not exist. create order before adding items")
+            return False
+
     def add_order_to_client(self, client, order):
         if client.phone in self.clients.keys():
             if order.order_id in self.orders.keys():
@@ -166,13 +189,6 @@ class Store():
         else:
             print("Client does not exist")
             return False
-
-    def add_item_to_order(self, item, order_id, qty=1, pending=1):
-        if order_id in self.orders.keys():
-            for i in range(qty):
-                self.orders[order_id].add_item(item, pending)
-        else:
-            print("order does not exist. create order before adding new items")
 
 
 
