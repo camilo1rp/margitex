@@ -9,7 +9,7 @@ class Client():
         self.name = name
         self.phone = phone
         self.email = email
-        self.orders = {}
+        self.orders = {} # {order_id: due_date, ...}
 
     def get_phone(self):
         return self.phone
@@ -29,12 +29,12 @@ class Client():
     def set_phone(self, new_phone):
         self.phone = new_phone
 
-    def add_order(self, order_id, status):
+    def add_order(self, order_id, due_date):
         if order_id in self.orders.keys():
             print("order already added")
             return False
         else:
-            self.orders[order_id] = status
+            self.orders[order_id] = due_date
             print("order has been added")
             return True
 
@@ -68,9 +68,10 @@ class Item():
 
 #Class Order
 class Order():
-    def __init__(self, order_id, date):
+    def __init__(self, order_id, date, due_date):
         self.order_id = order_id
         self.date = date
+        self.due_date = due_date
         self.items = {} # items = {item.code = [quantity, pending], {..}, ]
         self.pending = {}
         self.dispatched = {}
@@ -125,8 +126,8 @@ class Order():
 #Class Store
 class Store():
     def __init__(self):
-        self.clients = {} #clients = { Clients object: [orders], ...}
-        self.orders = {} # orders = {Orders object: order_id, ...}
+        self.clients = {} #clients = { Client_phone: Client object, ...}
+        self.orders = {} # orders = {order_id : Order object, ...}
         self.inventory = {} # inventory = {Items object: quantity}
 
     def add_item_to_inventory(self, new_item, qty=1):
@@ -146,32 +147,30 @@ class Store():
             print("item does not exist or quantity to removed is greater than in inventory")
             return False
 
-    def create_order(self, order_id, date):
-        if order_id in self.orders.values():
+    def create_order(self, order_id, date, due_date):
+        if order_id in self.orders.keys():
             print("order already exist")
             return False
         else:
-            return Order(order_id, date)
+            return Order(order_id, date, due_date)
 
     def add_order_to_client(self, client, order):
-        if client in self.clients.keys():
-            if order.order_id in self.orders.values():
+        if client.phone in self.clients.keys():
+            if order.order_id in self.orders.keys():
                 print("order already exist")
                 return False
             else:
-                self.clients[client].append(order)
-                self.orders[order] = order.order_id
+                client.add_order(order.order_id, order.date, order.due_date)
+                self.orders[order.order_id] = order
             return True
         else:
             print("Client does not exist")
             return False
 
-    def add_item_to_order(self, item, qty, order):
-        if order in self.orders.keys():
-            if item in self.orders[order].items.keys():
-                self.orders[order].items[item] += qty
-            else:
-                self.orders[order].items[item] = qty
+    def add_item_to_order(self, item, order_id, qty=1, pending=1):
+        if order_id in self.orders.keys():
+            for i in range(qty):
+                self.orders[order_id].add_item(item, pending)
         else:
             print("order does not exist. create order before adding new items")
 
