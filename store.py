@@ -75,6 +75,15 @@ class Order():
         self.pending = {}
         self.dispatched = {}
 
+    def __repr__(self):
+        return str(self.order_id)
+
+    def __eq__(self, other):
+        if self.order_id == other:
+            return True
+        else:
+            return False
+
     def add_item(self, item, pending=1): # pending 1 = pending 0 = dispatched
         if item in self.items.keys():
             self.items[item][0] += 1 # [item][0] = quantity
@@ -89,7 +98,7 @@ class Order():
             self.pending[item.code] = info[1]
             self.dispatched[item.code] = [info[0]-info[1]]
 
-    def dispatch_item(self, item, quantity=1):
+    def dispatch_item(self, item, quantity=1): # checks item is in order if so remove the quantity
         if item in self.items.keys():
             if (self.items[item][1] - quantity) >= 0:
                 self.items[item][1] -= quantity
@@ -116,16 +125,26 @@ class Order():
 #Class Store
 class Store():
     def __init__(self):
-        self.client = {}
-        self.orders = {}
-        self.inventory = {}
+        self.clients = {} #clients = { Clients object: [orders], ...}
+        self.orders = {} # orders = {Orders object: order_id, ...}
+        self.inventory = {} # inventory = {Items object: quantity}
 
     def add_item_to_inventory(self, new_item, qty=1):
         if new_item in self.inventory.keys():
             self.inventory[new_item] += qty
         else:
             self.inventory[new_item] = qty
-        print("item has beed added")
+        print("item has been added")
+        return True
+
+    def remove_item_from_inventory(self, item, qty):
+        if item in self.inventory.keys() and self.inventory[item] >= qty:
+            self.inventory[item] -= qty
+            print("item has been removed")
+            return True
+        else:
+            print("item does not exist or quantity to removed is greater than in inventory")
+            return False
 
     def create_order(self, order_id, date):
         if order_id in self.orders.values():
@@ -134,10 +153,18 @@ class Store():
         else:
             return Order(order_id, date)
 
-
     def add_order_to_client(self, client, order):
-        if client in
-
+        if client in self.clients.keys():
+            if order.order_id in self.orders.values():
+                print("order already exist")
+                return False
+            else:
+                self.clients[client].append(order)
+                self.orders[order] = order.order_id
+            return True
+        else:
+            print("Client does not exist")
+            return False
 
     def add_item_to_order(self, item, qty, order):
         if order in self.orders.keys():
@@ -147,6 +174,7 @@ class Store():
                 self.orders[order].items[item] = qty
         else:
             print("order does not exist. create order before adding new items")
+
 
 
 
