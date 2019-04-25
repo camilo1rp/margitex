@@ -4,6 +4,7 @@
     <extensionMap>
       <mapping pattern="sttle" type="CSS" />
       <mapping pattern="style" type="CSS" />
+      <mapping ext="" type="CSS" />
       <mapping pattern="index" type="HTML" />
       <mapping pattern="abc" type="PLAIN_TEXT" />
       <mapping pattern="urls" type="Python" />
